@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "practicaltask.riseapps.com.practicaltask"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    android {
+        configurations.all {
+            resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
+        }
+    }
+}
+
+// test
+def espresso = '2.2.2'
+def junit = '4.12'
+
+// architecture
+def dagger2 = '2.11'
+
+// network
+def retrofit2 = '2.3.0'
+def ok_http = '3.9.0'
+
+// ui
+def support = '27.1.1'
+def butterknife = '8.8.1'
+
+// programming approach
+def rx_java = '2.1.3'
+def rx_android = '2.0.1'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // test
+    testImplementation "junit:junit:${junit}"
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espresso}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // dagger 2
+    annotationProcessor "com.google.dagger:dagger-compiler:${dagger2}"
+    implementation "com.google.dagger:dagger:${dagger2}"
+
+    // retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:${retrofit2}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit2}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit2}"
+
+    // ok http
+    implementation "com.squareup.okhttp3:logging-interceptor:${ok_http}"
+    implementation "com.squareup.okhttp3:okhttp:${ok_http}"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:${ok_http}"
+
+    // support
+    implementation "com.android.support:support-v4:${support}"
+    implementation "com.android.support:appcompat-v7:${support}"
+    implementation "com.android.support:recyclerview-v7:${support}"
+
+    // butterknife
+    implementation "com.jakewharton:butterknife:${butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+
+    // rx
+    implementation "io.reactivex.rxjava2:rxjava:${rx_java}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rx_android}"
+}
